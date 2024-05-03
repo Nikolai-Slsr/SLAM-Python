@@ -10,7 +10,7 @@ running = 1
 
 pygame.init()
 screen = pygame.display.set_mode((width, height))
-car = Car([width / 2, height / 2], 0)
+car = Car([width / 2, height / 2], 45)
 clock = pygame.time.Clock()
 
 
@@ -49,21 +49,36 @@ while running:
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             running = False
+            print("Quitting...")
+
 
     # movement
+    def rotatedVector():
+        cos = math.cos(car.rotation)
+        sin = math.sin(car.rotation)
+        return [cos - sin, sin + cos]
+
 
     if pygame.key.get_pressed()[pygame.key.key_code("W")]:
-        car.carPos[0] = car.carPos[0] + math.sqrt(math.pow(1, 2) + math.pow(0, 2)) * math.cos(car.rotation + 90)
-        car.carPos[1] = car.carPos[1] + math.sqrt(math.pow(1, 2) + math.pow(0, 2)) * math.sin(car.rotation + 90)
+        car.carPos[1] += -2
 
     if pygame.key.get_pressed()[pygame.key.key_code("S")]:
-        car.carPos[0] = car.carPos[0] - (5 * math.cos(car.rotation + 90))
-        car.carPos[1] = car.carPos[1] - (5 * math.sin(car.rotation + 90))
+        car.carPos[1] += 2
+
     if pygame.key.get_pressed()[pygame.key.key_code("A")]:
-        car.rotation += 2
+        car.carPos[0] += -2
 
     if pygame.key.get_pressed()[pygame.key.key_code("D")]:
+        car.carPos[0] += 2
+
+    if pygame.key.get_pressed()[pygame.key.key_code("Q")]:
+        car.rotation += 2
+
+    if pygame.key.get_pressed()[pygame.key.key_code("E")]:
         car.rotation -= 2
+
     draw_rectangle(car.carPos[0], car.carPos[1], car.width, car.height, (255, 0, 0), car.rotation)
+    pygame.draw.circle(screen, (100, 100, 100), (car.carPos[0], car.carPos[1]), 2)
+    print(car.rotation)
     pygame.display.flip()
 pygame.quit()
