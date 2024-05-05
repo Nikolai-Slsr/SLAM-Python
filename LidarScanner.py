@@ -20,10 +20,11 @@ class LidarScanner:
 
     IntersectionPoints = [[1, 1]]
 
-    Map = [Strecke([100, 200], [200, 200]),
-           Strecke([200, 200], [200, 100]),
-           Strecke([200, 100], [100, 100]),
-           Strecke([100, 100], [100, 200])]
+    Map = [Strecke([400, 800], [800, 800]),
+           Strecke([800, 800], [800, 400]),
+           Strecke([800, 400], [400, 400]),
+           Strecke([400, 400], [400, 800]),
+           Strecke([100, 99], [1100, 700])]
 
     def __init__(self, angleResolution, FOV, maxRange):
         self.angleResolution = angleResolution
@@ -100,3 +101,4 @@ class LidarScanner:
                 self.IntersectionPoints.append(minPoint)
 
         print(self.Distances)
+

@@ -3,5 +3,7 @@
   <component name="Black">
     <option name="sdkName" value="Python 3.9 (Ai Car)" />
   </component>
-  <component name="ProjectRootManager" version="2" project-jdk-name="Python 3.9 (SLAM-Python)" project-jdk-type="Python SDK" />
+  <component name="ProjectRootManager" version="2" languageLevel="JDK_21" project-jdk-name="Python 3.9 (Ai Car)" project-jdk-type="Python SDK">
+    <output url="file://$PROJECT_DIR$/out" />
+  </component>
 </project>
