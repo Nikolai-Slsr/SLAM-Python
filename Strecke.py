@@ -1,6 +1,7 @@
 class Strecke:
-    A = [0,0]
-    B = [1,1]
+    A = [0, 0]
+    B = [1, 1]
+
     def __init__(self, A, B):
         self.A = A
         self.B = B
