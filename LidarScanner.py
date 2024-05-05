@@ -11,6 +11,12 @@ class LidarScanner:
 
     maxRange = 75.0
 
+    Distances = []
+
+    Points = [[1,1]]
+
+    IntersectionPoints = [[1, 1]]
+
     Map = [Strecke([100, 200], [200, 200]),
            Strecke([200, 200], [200, 100]),
            Strecke([200, 100], [100, 100]),
