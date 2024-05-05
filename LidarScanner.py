@@ -1,3 +1,6 @@
+import numpy
+
+import Calc
 from Strecke import Strecke
 import math
 import pygame
@@ -5,7 +8,7 @@ from Calc import *
 
 
 class LidarScanner:
-    angleResolution = math.pi / 16
+    angleResolution = math.pi / 32
 
     FOV = math.pi / 2
 
@@ -43,7 +46,7 @@ class LidarScanner:
             return 0, 0
 
     def getDistance(self, x1, y1, x2, y2):
-        return math.sqrt(math.pow(y1 - x1, 2) + math.pow(y2 - x2, 2))
+        return math.sqrt(math.pow(x2 - x1, 2) + math.pow(y2 - y1, 2))
 
     def scan(self, carPos, rotation):
         self.Points.clear()
@@ -79,7 +82,20 @@ class LidarScanner:
                 isOnLine = SX > ConvexA[0] and SX < ConvexB[0] and SY > ConvexA[1] and SY < ConvexB[1]
                 if isOnLine:
                     self.Distances.append(self.getDistance(carPos[0], carPos[1], SX, SY))
-                    CurrentIntersections.append([SX, SY])
-
+                    #print("dot: ",
+                          #round(numpy.dot(Calc.normalize(Vector), Calc.normalize([carPos[0] - SX, carPos[1] - SY]))))
+                    if round(numpy.dot(Calc.normalize(Vector), Calc.normalize([carPos[0] - SX, carPos[1] - SY])),
+                             6) != -1:
+                        CurrentIntersections.append([SX, SY])
+            if len(CurrentIntersections) > 0:
+                minPoint = CurrentIntersections[0]
+                for Point in CurrentIntersections:
+                    if (self.getDistance(carPos[0], carPos[1], Point[0], Point[1]) < self.getDistance(carPos[0],
+                                                                                                      carPos[1],
+                                                                                                      minPoint[0],
+                                                                                                      minPoint[1])):
+                        minPoint[0] = Point[0]
+                        minPoint[1] = Point[1]
+                self.IntersectionPoints.append(minPoint)
 
         print(self.Distances)
