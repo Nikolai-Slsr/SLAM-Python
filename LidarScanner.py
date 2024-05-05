@@ -84,10 +84,10 @@ class LidarScanner:
                 isOnLine = SX > ConvexA[0] and SX < ConvexB[0] and SY > ConvexA[1] and SY < ConvexB[1]
                 if isOnLine:
                     self.Distances.append(self.getDistance(carPos[0], carPos[1], SX, SY))
-                    #print("dot: ",
-                          #round(numpy.dot(Calc.normalize(Vector), Calc.normalize([carPos[0] - SX, carPos[1] - SY]))))
+
+
                     if round(numpy.dot(Calc.normalize(Vector), Calc.normalize([carPos[0] - SX, carPos[1] - SY])),
-                             6) != -1:
+                             6) != 1:
                         CurrentIntersections.append([SX, SY])
             if len(CurrentIntersections) > 0:
                 minPoint = CurrentIntersections[0]

@@ -14,6 +14,7 @@ scanDelay = 0.1
 allMessurements = [[-1, -1]]
 
 pygame.init()
+
 screen = pygame.display.set_mode((width, height))
 car = Car([width / 2, height / 2], 0)
 clock = pygame.time.Clock()
@@ -65,8 +66,14 @@ while running:
 
 
     if pygame.key.get_pressed()[pygame.K_ESCAPE]:
+        pygame.quit()
         sys.exit()
-    
+    if pygame.key.get_pressed()[pygame.key.key_code("RETURN")]:
+        if (lastScan + scanDelay) < time.time():
+            car.lidarScanner.scan(car.carPos, -car.rotation)
+            allMessurements = allMessurements + car.lidarScanner.IntersectionPoints
+            lastScan = time.time()
+
     if pygame.key.get_pressed()[pygame.key.key_code("W")]:
         car.carPos = addVectors(car.carPos, getRotatedVector([5, 0], -car.rotation))
 
