@@ -13,7 +13,7 @@ class LidarScanner:
 
     Distances = []
 
-    Points = [[1,1]]
+    Points = [[1, 1]]
 
     IntersectionPoints = [[1, 1]]
 
@@ -40,8 +40,7 @@ class LidarScanner:
             return Px, Py
         except:
             print("parallel")
-            return 0 , 0
-
+            return 0, 0
 
     def getDistance(self, x1, y1, x2, y2):
         return math.sqrt(math.pow(y1 - x1, 2) + math.pow(y2 - x2, 2))
@@ -51,10 +50,12 @@ class LidarScanner:
         self.Distances.clear()
         self.IntersectionPoints.clear()
         global SX
-        for i in range(0, int(self.FOV / self.angleResolution)):
-            CurrentIntersections = [[1,1]]
+        for i in range(0, 16):
+            CurrentIntersections = [[1, 1]]
             CurrentIntersections.clear()
-            a = - self.FOV / 2 + i * self.angleResolution
+            a = (-self.FOV / 2) + (i * self.angleResolution / 2)
+            print(self.FOV / self.angleResolution)
+            print(a)
             Vector = getRotatedVector([10000, 0], a + rotation)
             Point = addVectors(Vector, carPos)
             self.Points.append(Point)
