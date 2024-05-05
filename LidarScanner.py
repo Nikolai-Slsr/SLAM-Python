@@ -52,11 +52,12 @@ class LidarScanner:
         self.Points.clear()
         self.Distances.clear()
         self.IntersectionPoints.clear()
-        global SX
-        for i in range(0, 16):
+        #global SX
+        for i in range(0, int(self.FOV / self.angleResolution)):
             CurrentIntersections = [[1, 1]]
             CurrentIntersections.clear()
-            a = (-self.FOV / 2) + (i * self.angleResolution / 2)
+            a = (-self.FOV / 2) + (i * self.angleResolution)
+            print(math.pi / 2)
             print(self.FOV / self.angleResolution)
             print(a)
             Vector = getRotatedVector([10000, 0], a + rotation)
