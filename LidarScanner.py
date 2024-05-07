@@ -8,7 +8,7 @@ from Calc import *
 
 
 class LidarScanner:
-    angleResolution = math.pi / 32
+    angleResolution = math.pi / 64
 
     FOV = math.pi / 2
 
@@ -53,14 +53,11 @@ class LidarScanner:
         self.Points.clear()
         self.Distances.clear()
         self.IntersectionPoints.clear()
-        #global SX
+        # global SX
         for i in range(0, int(self.FOV / self.angleResolution)):
             CurrentIntersections = [[1, 1]]
             CurrentIntersections.clear()
             a = (-self.FOV / 2) + (i * self.angleResolution)
-            print(math.pi / 2)
-            print(self.FOV / self.angleResolution)
-            print(a)
             Vector = getRotatedVector([10000, 0], a + rotation)
             Point = addVectors(Vector, carPos)
             self.Points.append(Point)
@@ -85,7 +82,6 @@ class LidarScanner:
                 if isOnLine:
                     self.Distances.append(self.getDistance(carPos[0], carPos[1], SX, SY))
 
-
                     if round(numpy.dot(Calc.normalize(Vector), Calc.normalize([carPos[0] - SX, carPos[1] - SY])),
                              6) != 1:
                         CurrentIntersections.append([SX, SY])
@@ -99,6 +95,5 @@ class LidarScanner:
                         minPoint[0] = Point[0]
                         minPoint[1] = Point[1]
                 self.IntersectionPoints.append(minPoint)
-
-        print(self.Distances)
-
+        return self.Distances
+        #print(self.Distances)

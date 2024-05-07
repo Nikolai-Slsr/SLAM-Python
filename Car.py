@@ -8,7 +8,7 @@ class Car:
 
     width = 40
     height = 40
-    lidarScanner = LidarScanner(math.pi / 32, math.pi , 75.0)
+    lidarScanner = LidarScanner(math.radians(0.5), math.radians(270), 75.0)
 
     def __init__(self, carPos, rotation):
         self.carPos = carPos

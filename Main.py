@@ -1,4 +1,5 @@
-import pygame, sys
+import pygame
+import sys
 import math
 from Car import Car
 import time
@@ -11,7 +12,7 @@ fps = 30
 running = 1
 lastScan = 0
 scanDelay = 0.1
-allMessurements = [[-1, -1]]
+allMeasurements = [[-1, -1]]
 
 pygame.init()
 
@@ -20,16 +21,16 @@ car = Car([width / 2, height / 2], 0)
 clock = pygame.time.Clock()
 
 
-def draw_rectangle(x, y, width, height, color, rotation):
+def draw_rectangle(x, y, w, h, color, rotation):
     points = []
 
     # The distance from the center of the rectangle to
     # one of the corners is the same for each corner.
-    radius = math.sqrt((height / 2) ** 2 + (width / 2) ** 2)
+    radius = math.sqrt((h / 2) ** 2 + (w / 2) ** 2)
 
     # Get the angle to one of the corners with respect
     # to the x-axis.
-    angle = math.atan2(height / 2, width / 2)
+    angle = math.atan2(h / 2, w / 2)
 
     # Transform that angle to reach each corner of the rectangle.
     angles = [angle, -angle + math.pi, angle + math.pi, -angle]
@@ -52,26 +53,22 @@ while running:
     # clear the screen every time before drawing new objects
     screen.fill((0, 0, 0))
     # game event loop
+
+    # Quitting Programm
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
-            running = False
-            print("Quitting...")
-
-
-    # movement
-    def rotatedVector():
-        cos = math.cos(car.rotation)
-        sin = math.sin(car.rotation)
-        return [cos - sin, sin + cos]
-
+            pygame.quit()
+            sys.exit(0)
 
     if pygame.key.get_pressed()[pygame.K_ESCAPE]:
         pygame.quit()
-        sys.exit()
+        sys.exit(0)
+
+    # movement
     if pygame.key.get_pressed()[pygame.key.key_code("RETURN")]:
         if (lastScan + scanDelay) < time.time():
             car.lidarScanner.scan(car.carPos, -car.rotation)
-            allMessurements = allMessurements + car.lidarScanner.IntersectionPoints
+            allMeasurements = allMeasurements + car.lidarScanner.IntersectionPoints
             lastScan = time.time()
 
     if pygame.key.get_pressed()[pygame.key.key_code("W")]:
@@ -86,18 +83,17 @@ while running:
     if pygame.key.get_pressed()[pygame.key.key_code("D")]:
         car.rotation -= math.pi / 40
 
-    # for Point in car.lidarScanner.Points:
-    # pygame.draw.line(screen, (255,255,255), car.carPos, Point)
+    # draw to the Screen
 
     pygame.draw.circle(screen, (100, 100, 100), (car.carPos[0], car.carPos[1]), 2)
     pygame.draw.line(screen, (255, 255, 255), car.carPos,
                      addVectors(getRotatedVector([30, 0], -car.rotation), car.carPos))
-    #for Strecke in car.lidarScanner.Map:
-        #pygame.draw.line(screen, (40, 40, 40), Strecke.A, Strecke.B)
+    for Strecke in car.lidarScanner.Map:
+        pygame.draw.line(screen, (4, 4, 4), Strecke.A, Strecke.B)
     draw_rectangle(car.carPos[0], car.carPos[1], car.width, car.height, (255, 0, 0), math.degrees(car.rotation))
-    for Point1 in allMessurements:
+    for Point1 in allMeasurements:
         pygame.draw.circle(screen, (255, 100, 100), (Point1[0], Point1[1]), 2)
-    for Point2 in car.lidarScanner.IntersectionPoints:
-        pygame.draw.circle(screen, (255, 100, 100), (Point2[0], Point2[1]), 2)
+    #for Point2 in car.lidarScanner.IntersectionPoints:
+        #pygame.draw.circle(screen, (255, 100, 100), (Point2[0], Point2[1]), 2)
     pygame.display.flip()
 pygame.quit()
