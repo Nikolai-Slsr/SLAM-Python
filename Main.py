@@ -25,7 +25,7 @@ filePath = ""
 #ilepath
 
 
-def draw_rectangle(x, y, w, h, color, rotation):
+def draw_retangle(x, y, w, h, color, rotation):
     points = []
 
     # The distance from the center of the rectangle to

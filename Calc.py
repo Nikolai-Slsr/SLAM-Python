@@ -1,4 +1,4 @@
-import math
+import math, numpy
 
 
 def getRotatedUnitVector(a):
@@ -39,3 +39,27 @@ def arrayMatch(Array1, Array2):
         return Score / Array1.length()
     else:
         return -1
+
+
+def eachWithEach(a, b):
+    return [a[0] * b[0], a[1] * b[1]]
+
+
+def multVec(a, b):
+    return [a[0] * b, a[1] * b]
+
+
+def divVec(a, b):
+    return [a[0] / b, a[1] / b]
+
+
+def pow(a, b):
+    return [math.pow(a[0], b), math.pow(a[1], b)]
+
+
+def getAngle(a, b):
+    return numpy.dot(normalize(a), normalize(b))
+
+
+def getDist(a):
+    return math.sqrt(math.pow(a[0], 2) + math.pow(a[1], 2))
