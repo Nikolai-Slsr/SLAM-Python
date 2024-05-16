@@ -81,6 +81,7 @@ class LidarScanner:
                 isOnLine = SX > ConvexA[0] and SX < ConvexB[0] and SY > ConvexA[1] and SY < ConvexB[1]
                 if isOnLine:
                     self.Distances.append(self.getDistance(carPos[0], carPos[1], SX, SY))
+                    self.Distances.append(rotation)
 
                     if round(numpy.dot(Calc.normalize(Vector), Calc.normalize([carPos[0] - SX, carPos[1] - SY])),
                              6) != 1:
@@ -95,5 +96,4 @@ class LidarScanner:
                         minPoint[0] = Point[0]
                         minPoint[1] = Point[1]
                 self.IntersectionPoints.append(minPoint)
-        return self.Distances
-        #print(self.Distances)
+        return self.Distances, self.IntersectionPoints

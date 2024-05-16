@@ -20,9 +20,13 @@ screen = pygame.display.set_mode((width, height))
 car = Car([width / 2, height / 2], 0)
 clock = pygame.time.Clock()
 
-filePath = ""
+filePath = "/Users/nikolai/IdeaProjects/Ai Car/Saves/Data.txt"
 
-#ilepath
+file = open(filePath, "w")
+
+file.write("Version 1, Lidar Scan Data \n \n")
+
+file.write("FOV: " + str(car.lidarScanner.FOV) + "  AngleResolution: " + str(car.lidarScanner.angleResolution) + "\n")
 
 
 def draw_retangle(x, y, w, h, color, rotation):
@@ -72,8 +76,8 @@ while running:
     car.carAccel = [0,0]
     if pygame.key.get_pressed()[pygame.key.key_code("RETURN")]:
         if (lastScan + scanDelay) < time.time():
-            car.lidarScanner.scan(car.carPos, -car.rotation)
-            allMeasurements = allMeasurements + car.lidarScanner.IntersectionPoints
+            allMeasurements = allMeasurements + car.lidarScanner.scan(car.carPos, -car.rotation)[1]
+            file.write(str(car.lidarScanner.Distances)+ "\n")
             lastScan = time.time()
 
     if pygame.key.get_pressed()[pygame.key.key_code("W")]:
@@ -89,6 +93,9 @@ while running:
         car.rotation -= math.pi / 4 * clock.get_time()/1000
     # update CarPos
     car.updatePos(clock.get_time())
+    # write File
+
+    #file.write(car.lidarScanner.Distances)
 
     # draw to the Screen
     pygame.draw.circle(screen, (100, 100, 100), (car.carPos[0], car.carPos[1]), 2)
@@ -103,5 +110,6 @@ while running:
         pygame.draw.circle(screen, (255, 100, 100), (Point1[0], Point1[1]), 2)
     # for Point2 in car.lidarScanner.IntersectionPoints:
     # pygame.draw.circle(screen, (255, 100, 100), (Point2[0], Point2[1]), 2)
+
     pygame.display.flip()
 pygame.quit()
