@@ -8,7 +8,7 @@ from Calc import *
 
 
 class LidarScanner:
-    angleResolution = math.pi / 64
+    angleResolution = math.pi / 32
 
     FOV = math.pi / 2
 
