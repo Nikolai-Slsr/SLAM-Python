@@ -20,7 +20,7 @@ screen = pygame.display.set_mode((width, height))
 car = Car([width / 2, height / 2], 0)
 clock = pygame.time.Clock()
 
-filePath = "/Users/nikolai/IdeaProjects/Ai Car/Saves/Data.txt"
+filePath = "/Users/nikolai/IdeaProjects/Ai Car/Saves/Data.LDT"
 
 file = open(filePath, "w")
 
@@ -77,7 +77,7 @@ while running:
     if pygame.key.get_pressed()[pygame.key.key_code("RETURN")]:
         if (lastScan + scanDelay) < time.time():
             allMeasurements = allMeasurements + car.lidarScanner.scan(car.carPos, -car.rotation)[1]
-            file.write(str(car.lidarScanner.Distances) + "\n")
+            file.write("L" + str(car.lidarScanner.Distances) + "\n")
             lastScan = time.time()
 
     if pygame.key.get_pressed()[pygame.key.key_code("W")]:
@@ -95,7 +95,7 @@ while running:
     car.updatePos(clock.get_time())
     # write File
 
-    file.write(str(car.carAccel) + " " + str(car.rotation) + "\n")
+    file.write("D" + str(car.carAccel) + " " + str(car.rotation) + "\n")
 
     # draw to the Screen
     pygame.draw.circle(screen, (100, 100, 100), (car.carPos[0], car.carPos[1]), 2)
